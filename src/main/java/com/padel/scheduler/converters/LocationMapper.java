@@ -3,11 +3,15 @@ package com.padel.scheduler.converters;
 import com.padel.scheduler.dtos.LocationDto;
 import com.padel.scheduler.model.Location;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(uses = {FieldMapper.class})
 public interface LocationMapper {
 
-    LocationDto locationToLocationDto(Location location);
-    Location locationDtoToLocation(LocationDto locationDto);
+    @Mapping(source = "fieldDtos", target = "fields")
+    Location clubDtoToClub(LocationDto locationDto);
+
+    @Mapping(source = "fields", target = "fieldDtos")
+    LocationDto clubToClubDto(Location location);
 
 }

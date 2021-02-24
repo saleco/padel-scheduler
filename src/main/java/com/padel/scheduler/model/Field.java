@@ -16,13 +16,13 @@ import java.time.LocalDateTime;
 public class Field {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private boolean isCovered;
     private int number;
     private LocalDateTime createTime;
 
-    @ManyToOne
-    @JoinColumn(name = "club_id", referencedColumnName = "id")
-    private Club club;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Location location;
+
 }

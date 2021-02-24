@@ -1,7 +1,6 @@
 package com.padel.scheduler.services.Impl;
 
 import com.padel.scheduler.converters.FieldMapper;
-import com.padel.scheduler.converters.FieldMapperImpl;
 import com.padel.scheduler.dtos.FieldDto;
 import com.padel.scheduler.exceptions.NotFoundException;
 import com.padel.scheduler.repositories.FieldRepository;

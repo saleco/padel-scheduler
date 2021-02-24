@@ -1,10 +1,10 @@
 package com.padel.scheduler;
 
-import com.padel.scheduler.converters.ClubMapperImpl;
 import com.padel.scheduler.converters.FieldMapperImpl;
-import com.padel.scheduler.dtos.ClubDto;
+import com.padel.scheduler.converters.LocationMapperImpl;
+import com.padel.scheduler.dtos.LocationDto;
 import com.padel.scheduler.dtos.FieldDto;
-import com.padel.scheduler.repositories.ClubRepository;
+import com.padel.scheduler.repositories.LocationRepository;
 import com.padel.scheduler.repositories.FieldRepository;
 import com.padel.scheduler.services.ClubService;
 import com.padel.scheduler.services.FieldService;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -34,13 +33,13 @@ public class FieldIntegrationTest {
     private FieldMapperImpl fieldMapper;
 
     @Autowired
-    private ClubRepository clubRepository;
+    private LocationRepository locationRepository;
 
     @Autowired
     private ClubService clubService;
 
     @Autowired
-    private ClubMapperImpl clubMapper;
+    private LocationMapperImpl locationMapper;
 
     @BeforeEach
     void setup() {
@@ -60,16 +59,14 @@ public class FieldIntegrationTest {
                 .number(1)
                 .createTime(LocalDateTime.now())
                 .isCovert(false)
-                .clubDto(createClubDtoPP())
                 .build())
         ;
     }
 
-    private ClubDto createClubDtoPP() {
-        return clubService.save(ClubDto.builder()
+    private LocationDto createClubDtoPP() {
+        return clubService.save(LocationDto.builder()
                 .name("Padel nas Piramides")
                 .createTime(LocalDateTime.now())
-                .fieldDtos(new ArrayList<>())
                 .build());
     }
 }

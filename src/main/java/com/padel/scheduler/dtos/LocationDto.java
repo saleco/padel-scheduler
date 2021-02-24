@@ -6,18 +6,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class LocationDto {
 
     private Integer id;
-    private String latitude;
-    private String longitude;
     private String name;
     private LocalDateTime createTime;
-
+    private List<FieldDto> fieldDtos;
 
 }

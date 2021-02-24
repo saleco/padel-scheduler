@@ -17,6 +17,6 @@ public class FieldDto {
     private boolean isCovert;
     private int number;
     private LocalDateTime createTime;
-    private ClubDto clubDto;
+    private LocationDto locationDto;
 
 }

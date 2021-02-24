@@ -1,12 +1,12 @@
 package com.padel.scheduler.services;
 
-import com.padel.scheduler.dtos.ClubDto;
+import com.padel.scheduler.dtos.LocationDto;
 
 import java.util.List;
 
 public interface ClubService {
 
-    ClubDto save(ClubDto club);
-    List<ClubDto> list();
-    ClubDto findById(Integer id);
+    LocationDto save(LocationDto club);
+    List<LocationDto> list();
+    LocationDto findById(Integer id);
 }
