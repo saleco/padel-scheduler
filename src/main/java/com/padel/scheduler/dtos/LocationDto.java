@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -15,5 +17,7 @@ public class LocationDto {
     private String latitude;
     private String longitude;
     private String name;
+    private LocalDateTime createTime;
+
 
 }

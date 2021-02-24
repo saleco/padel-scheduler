@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,7 +46,18 @@ public class LocationIntegrationTest {
         LocationDto locationDto = createLocationPP();
         LocationDto locationDtoCheck = locationService.findById(locationDto.getId());
 
-
+        assertAll("Check Location fields",
+                () -> assertNotNull(locationDtoCheck),
+                () -> assertTrue(locationDtoCheck.getId() > 0),
+                () -> assertFalse(locationDtoCheck.getName().isEmpty()),
+                () -> assertFalse(locationDtoCheck.getLatitude().isEmpty()),
+                () -> assertFalse(locationDtoCheck.getLongitude().isEmpty()),
+                () -> assertNotNull(locationDtoCheck.getCreateTime()),
+                () -> assertTrue(locationDtoCheck.getCreateTime().isBefore(LocalDateTime.now())),
+                () -> assertEquals("Padel nas Piramides", locationDtoCheck.getName()),
+                () -> assertEquals("12345", locationDtoCheck.getLatitude()),
+                () -> assertEquals("12345", locationDtoCheck.getLongitude())
+        );
     }
 
     private LocationDto createLocationPP(){
@@ -53,6 +65,7 @@ public class LocationIntegrationTest {
                 .name("Padel nas Piramides")
                 .latitude("12345")
                 .longitude("12345")
+                .createTime(LocalDateTime.now())
                 .build());
     }
 
