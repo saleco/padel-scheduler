@@ -8,4 +8,6 @@ public interface UserService {
 
     UserDto save(UserDto userDTO);
     List<UserDto> list();
+
+    UserDto findById(Integer userId);
 }
