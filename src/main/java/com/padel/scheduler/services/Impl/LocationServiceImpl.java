@@ -1,9 +1,10 @@
-package com.padel.scheduler.services;
+package com.padel.scheduler.services.Impl;
 
 import com.padel.scheduler.converters.LocationMapper;
 import com.padel.scheduler.dtos.LocationDto;
 import com.padel.scheduler.exceptions.NotFoundException;
 import com.padel.scheduler.repositories.LocationRepository;
+import com.padel.scheduler.services.LocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;

@@ -1,9 +1,10 @@
-package com.padel.scheduler.services;
+package com.padel.scheduler.services.Impl;
 
 import com.padel.scheduler.converters.UserMapper;
 import com.padel.scheduler.dtos.UserDto;
 import com.padel.scheduler.exceptions.NotFoundException;
 import com.padel.scheduler.repositories.UserRepository;
+import com.padel.scheduler.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

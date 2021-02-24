@@ -5,23 +5,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 @Data
-public class Location {
+@Builder
+public class Field {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String latitude;
-    private String longitude;
+    private boolean isCovered;
+    private int number;
     private LocalDateTime createTime;
+
+    @ManyToOne
+    @JoinColumn(name = "club_id", referencedColumnName = "id")
+    private Club club;
 }

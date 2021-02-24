@@ -2,10 +2,9 @@ package com.padel.scheduler;
 
 import com.padel.scheduler.converters.LocationMapperImpl;
 import com.padel.scheduler.dtos.LocationDto;
-import com.padel.scheduler.model.Location;
 import com.padel.scheduler.repositories.LocationRepository;
 import com.padel.scheduler.services.LocationService;
-import com.padel.scheduler.services.LocationServiceImpl;
+import com.padel.scheduler.services.Impl.LocationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +48,10 @@ public class LocationIntegrationTest {
         assertAll("Check Location fields",
                 () -> assertNotNull(locationDtoCheck),
                 () -> assertTrue(locationDtoCheck.getId() > 0),
-                () -> assertFalse(locationDtoCheck.getName().isEmpty()),
                 () -> assertFalse(locationDtoCheck.getLatitude().isEmpty()),
                 () -> assertFalse(locationDtoCheck.getLongitude().isEmpty()),
                 () -> assertNotNull(locationDtoCheck.getCreateTime()),
                 () -> assertTrue(locationDtoCheck.getCreateTime().isBefore(LocalDateTime.now())),
-                () -> assertEquals("Padel nas Piramides", locationDtoCheck.getName()),
                 () -> assertEquals("12345", locationDtoCheck.getLatitude()),
                 () -> assertEquals("12345", locationDtoCheck.getLongitude())
         );
@@ -62,7 +59,6 @@ public class LocationIntegrationTest {
 
     private LocationDto createLocationPP(){
         return locationService.save(LocationDto.builder()
-                .name("Padel nas Piramides")
                 .latitude("12345")
                 .longitude("12345")
                 .createTime(LocalDateTime.now())

@@ -5,7 +5,7 @@ import com.padel.scheduler.dtos.UserDto;
 import com.padel.scheduler.dtos.UserTypeDto;
 import com.padel.scheduler.repositories.UserRepository;
 import com.padel.scheduler.services.UserService;
-import com.padel.scheduler.services.UserServiceImpl;
+import com.padel.scheduler.services.Impl.UserServiceImpl;
 import com.padel.scheduler.services.UserTypeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
