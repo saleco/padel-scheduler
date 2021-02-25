@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -59,6 +60,7 @@ public class FieldIntegrationTest {
                 .number(1)
                 .createTime(LocalDateTime.now())
                 .isCovert(false)
+                .locationDto(createClubDtoPP())
                 .build())
         ;
     }
@@ -67,6 +69,7 @@ public class FieldIntegrationTest {
         return clubService.save(LocationDto.builder()
                 .name("Padel nas Piramides")
                 .createTime(LocalDateTime.now())
+                .fieldDtos(new LinkedList<>())
                 .build());
     }
 }
