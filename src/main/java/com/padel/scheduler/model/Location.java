@@ -1,5 +1,6 @@
 package com.padel.scheduler.model;
 
+import com.padel.scheduler.dtos.FieldDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,4 +28,9 @@ public class Location {
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Field> fields = new ArrayList<>();
+
+    public void addField(Field field){
+        this.fields.add(field);
+        field.setLocation(this);
+    }
 }
