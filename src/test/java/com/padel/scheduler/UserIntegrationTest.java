@@ -1,13 +1,12 @@
 package com.padel.scheduler;
 
-import com.padel.scheduler.converters.UserMapperImpl;
-import com.padel.scheduler.dtos.UserDto;
-import com.padel.scheduler.dtos.UserTypeDto;
-import com.padel.scheduler.repositories.UserRepository;
-import com.padel.scheduler.services.UserService;
-import com.padel.scheduler.services.Impl.UserServiceImpl;
-import com.padel.scheduler.services.UserTypeService;
-import org.junit.jupiter.api.BeforeEach;
+import com.padel.scheduler.factories.UserFactory;
+import com.padel.scheduler.factories.UserTypeFactory;
+import com.padel.scheduler.user.dto.UserDto;
+import com.padel.scheduler.user.service.UserService;
+import com.padel.scheduler.usertype.dto.UserTypeDto;
+import com.padel.scheduler.usertype.service.UserTypeService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,32 +23,22 @@ class UserIntegrationTest {
     private UserService userService;
 
     @Autowired
-    protected UserRepository userRepository;
-
-    @Autowired
-    protected UserMapperImpl userMapper;
-
-    @Autowired
     private UserTypeService userTypeService;
 
-    @BeforeEach
-    void setup() {
-        userService = new UserServiceImpl(userRepository, userMapper);
-
-    }
-
+    @DisplayName("Creates a user and check user list not empty.")
     @Test
     void createUser_ThenCheckUserCreated() {
-        createUserJoao();
-        createUserSallo();
+        createUserAluno();
+        createUserProfessor();
         List<UserDto> userDtos = userService.list();
         assertNotNull(userDtos);
         assertFalse(userDtos.isEmpty());
     }
 
+    @DisplayName("Creates a user and check user created.")
     @Test
     void createUser_ThenCheckFields() {
-        UserDto userDto = createUserSallo();
+        UserDto userDto = createUserProfessor();
         UserDto userDtoCheck = userService.findById(userDto.getUserId());
 
         assertAll("Check User fields",
@@ -62,14 +51,15 @@ class UserIntegrationTest {
                 () -> assertTrue(userDtoCheck.getCreateTime().isBefore(LocalDateTime.now())),
                 () -> assertEquals("sallo.szrajbman", userDtoCheck.getUsername()),
                 () -> assertEquals("sallo.szrajbmanl@hotmail.com", userDtoCheck.getEmail()),
-                () -> assertEquals("sallosallo", userDtoCheck.getPassword())
+                () -> assertEquals("mypass", userDtoCheck.getPassword())
 
         );
     }
 
+    @DisplayName("Creates a Professor User Type, then creates a Professor User and check User Type.")
     @Test
     void createUserWhenUserTypeEqualsProfessor_ThenCheckFields() {
-        UserDto userDto = createUserSallo();
+        UserDto userDto = createUserProfessor();
         UserDto userDtoCheck = userService.findById(userDto.getUserId());
 
         assertAll("Check User with User Type Professor",
@@ -80,9 +70,10 @@ class UserIntegrationTest {
         );
     }
 
+    @DisplayName("Creates a Aluno User Type, then creates a Aluno User and check User Type.")
     @Test
     void createUserWhenUserTypeEqualsAluno_ThenCheckFields() {
-        UserDto userDto = createUserJoao();
+        UserDto userDto = createUserAluno();
         UserDto userDtoCheck = userService.findById(userDto.getUserId());
 
         assertAll("Check User with User Type Aluno",
@@ -93,36 +84,32 @@ class UserIntegrationTest {
         );
     }
 
-    private UserDto createUserJoao() {
-        return userService.save(UserDto.builder()
-                  .username("joao.miguel")
-                  .email("joao.miguel@gmail.com")
-                  .createTime(LocalDateTime.now())
-                  .password("mypass")
-                  .userTypeDto(creteUserTypeDtoAluno())
-                  .build());
+    private UserDto createUserProfessor() {
+        return createUserSallo(creteUserTypeProfessor());
+
     }
 
-    private UserDto createUserSallo() {
-        return userService.save(UserDto.builder()
-                .username("sallo.szrajbman")
-                .email("sallo.szrajbmanl@hotmail.com")
-                .createTime(LocalDateTime.now())
-                .password("sallosallo")
-                .userTypeDto(creteUserTypeDtoProfessor())
-                .build());
+    private UserDto createUserAluno() {
+        return createUserJoao(creteUserTypeAluno());
     }
 
-    private UserTypeDto creteUserTypeDtoProfessor(){
-        return userTypeService.save(UserTypeDto.builder()
-                .name("Professor")
-                .build());
+    private UserDto createUserJoao(UserTypeDto userTypeDto) {
+        return userService.save(
+          UserFactory.createUserDto("joao.miguel", "joao.miguel@gmail.com", "mypass", userTypeDto)
+        );
     }
 
-    private UserTypeDto creteUserTypeDtoAluno(){
-        return userTypeService.save(UserTypeDto.builder()
-                .name("Aluno")
-                .build());
+    private UserDto createUserSallo(UserTypeDto userTypeDto) {
+        return userService.save(
+          UserFactory.createUserDto("sallo.szrajbman", "sallo.szrajbmanl@hotmail.com", "mypass", userTypeDto)
+        );
     }
 
+    private UserTypeDto creteUserTypeProfessor(){
+        return userTypeService.save(UserTypeFactory.createUserTypeDto("Professor"));
+    }
+
+    private UserTypeDto creteUserTypeAluno(){
+        return userTypeService.save(UserTypeFactory.createUserTypeDto("Aluno"));
+    }
 }

@@ -1,15 +1,9 @@
 package com.padel.scheduler;
 
-import com.padel.scheduler.converters.FieldMapperImpl;
-import com.padel.scheduler.converters.LocationMapperImpl;
-import com.padel.scheduler.dtos.LocationDto;
-import com.padel.scheduler.dtos.FieldDto;
-import com.padel.scheduler.repositories.LocationRepository;
-import com.padel.scheduler.repositories.FieldRepository;
-import com.padel.scheduler.services.ClubService;
-import com.padel.scheduler.services.FieldService;
-import com.padel.scheduler.services.Impl.FieldServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
+import com.padel.scheduler.field.dto.FieldDto;
+import com.padel.scheduler.field.service.FieldService;
+import com.padel.scheduler.location.dto.LocationDto;
+import com.padel.scheduler.location.service.LocationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,28 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 public class FieldIntegrationTest {
 
-    @Autowired
-    private FieldRepository fieldRepository;
 
     @Autowired
     private FieldService fieldService;
 
     @Autowired
-    private FieldMapperImpl fieldMapper;
+    private LocationService locationService;
 
-    @Autowired
-    private LocationRepository locationRepository;
-
-    @Autowired
-    private ClubService clubService;
-
-    @Autowired
-    private LocationMapperImpl locationMapper;
-
-    @BeforeEach
-    void setup() {
-        fieldService = new FieldServiceImpl(fieldRepository, fieldMapper);
-    }
 
     @Test
     void createField_ThenCheckFieldCreated() {
@@ -61,12 +40,11 @@ public class FieldIntegrationTest {
                 .createTime(LocalDateTime.now())
                 .isCovert(false)
                 .locationDto(createClubDtoPP())
-                .build())
-        ;
+                .build());
     }
 
     private LocationDto createClubDtoPP() {
-        return clubService.save(LocationDto.builder()
+        return locationService.save(LocationDto.builder()
                 .name("Padel nas Piramides")
                 .createTime(LocalDateTime.now())
                 .fieldDtos(new LinkedList<>())
