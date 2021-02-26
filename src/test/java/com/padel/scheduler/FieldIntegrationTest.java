@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-public class FieldIntegrationTest {
+class FieldIntegrationTest {
 
 
     @Autowired

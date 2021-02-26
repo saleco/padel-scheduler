@@ -1,9 +1,9 @@
 package com.padel.scheduler.field.repository;
 
 import com.padel.scheduler.field.model.Field;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FieldRepository extends CrudRepository<Field, Integer> {
+public interface FieldRepository extends JpaRepository<Field, Integer> {
 }

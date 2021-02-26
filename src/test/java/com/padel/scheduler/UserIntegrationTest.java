@@ -1,5 +1,6 @@
 package com.padel.scheduler;
 
+import com.padel.scheduler.dto.PageableRequestDto;
 import com.padel.scheduler.factories.UserFactory;
 import com.padel.scheduler.factories.UserTypeFactory;
 import com.padel.scheduler.user.dto.UserDto;
@@ -10,9 +11,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,9 +31,9 @@ class UserIntegrationTest {
     void createUser_ThenCheckUserCreated() {
         createUserAluno();
         createUserProfessor();
-        List<UserDto> userDtos = userService.list();
+        Page<UserDto> userDtos = userService.list(new PageableRequestDto(20, 0));
         assertNotNull(userDtos);
-        assertFalse(userDtos.isEmpty());
+        assertFalse(userDtos.getContent().isEmpty());
     }
 
     @DisplayName("Creates a user and check user created.")
