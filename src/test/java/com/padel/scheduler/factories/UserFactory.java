@@ -13,7 +13,7 @@ public class UserFactory {
           .email(email)
           .createTime(LocalDateTime.now())
           .password(password)
-          .userTypeDto(userTypeDto)
+          .userType(userTypeDto)
           .build();
     }
 }

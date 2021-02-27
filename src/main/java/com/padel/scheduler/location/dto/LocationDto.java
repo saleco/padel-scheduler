@@ -18,6 +18,6 @@ public class LocationDto {
     private Integer id;
     private String name;
     private LocalDateTime createTime;
-    private List<FieldDto> fieldDtos;
+    private List<FieldDto> fields;
 
 }

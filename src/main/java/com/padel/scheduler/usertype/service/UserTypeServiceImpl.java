@@ -1,20 +1,21 @@
 package com.padel.scheduler.usertype.service;
 
+import com.padel.scheduler.base.mappers.BaseMapper;
+import com.padel.scheduler.base.services.CrudServiceImpl;
 import com.padel.scheduler.usertype.dto.UserTypeDto;
-import com.padel.scheduler.usertype.mapper.UserTypeMapper;
-import com.padel.scheduler.usertype.repository.UserTypeRepository;
-import lombok.RequiredArgsConstructor;
+import com.padel.scheduler.usertype.model.UserType;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
-public class UserTypeServiceImpl implements UserTypeService {
+public class UserTypeServiceImpl extends CrudServiceImpl<UserTypeDto, UserType> {
 
-    private final UserTypeRepository userTypeRepository;
-    private final UserTypeMapper userTypeMapper;
+    public UserTypeServiceImpl(JpaRepository<UserType, Integer> repository, BaseMapper<UserTypeDto, UserType> mapper) {
+        super(repository, mapper);
+    }
 
     @Override
     public UserTypeDto save(UserTypeDto userTypeDto) {
-        return userTypeMapper.userTypeToUserTypeDto(userTypeRepository.save(userTypeMapper.userTypeDtoToUserType(userTypeDto)));
+        return super.save(userTypeDto);
     }
 }

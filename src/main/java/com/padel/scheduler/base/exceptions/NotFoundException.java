@@ -1,4 +1,4 @@
-package com.padel.scheduler.exceptions;
+package com.padel.scheduler.base.exceptions;
 
 public class NotFoundException extends RuntimeException{
 

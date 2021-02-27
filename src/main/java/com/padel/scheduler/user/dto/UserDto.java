@@ -32,5 +32,5 @@ public class UserDto {
     private LocalDateTime createTime;
 
     @Schema(description = "User Type", example = "Aluno, Professor", required = true)
-    private UserTypeDto userTypeDto;
+    private UserTypeDto userType;
 }

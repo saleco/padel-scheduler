@@ -1,12 +1,11 @@
 package com.padel.scheduler;
 
-import com.padel.scheduler.dto.PageableRequestDto;
+import com.padel.scheduler.base.dto.PageableRequestDto;
+import com.padel.scheduler.base.services.CrudService;
 import com.padel.scheduler.factories.UserFactory;
 import com.padel.scheduler.factories.UserTypeFactory;
 import com.padel.scheduler.user.dto.UserDto;
-import com.padel.scheduler.user.service.UserService;
 import com.padel.scheduler.usertype.dto.UserTypeDto;
-import com.padel.scheduler.usertype.service.UserTypeService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +20,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserIntegrationTest {
 
     @Autowired
-    private UserService userService;
+    private CrudService<UserDto> userService;
 
     @Autowired
-    private UserTypeService userTypeService;
+    private CrudService<UserTypeDto> userTypeService;
 
     @DisplayName("Creates a user and check user list not empty.")
     @Test
     void createUser_ThenCheckUserCreated() {
         createUserAluno();
         createUserProfessor();
-        Page<UserDto> userDtos = userService.list(new PageableRequestDto(20, 0));
+        Page<UserDto> userDtos = userService.list(new PageableRequestDto(0, 20));
         assertNotNull(userDtos);
         assertFalse(userDtos.getContent().isEmpty());
     }
@@ -64,9 +63,9 @@ class UserIntegrationTest {
         UserDto userDtoCheck = userService.findById(userDto.getUserId());
 
         assertAll("Check User with User Type Professor",
-                () -> assertNotNull(userDtoCheck.getUserTypeDto()),
-                () -> assertTrue(userDtoCheck.getUserTypeDto().getId() > 0),
-                () -> assertEquals("Professor", userDtoCheck.getUserTypeDto().getName())
+                () -> assertNotNull(userDtoCheck.getUserType()),
+                () -> assertTrue(userDtoCheck.getUserType().getId() > 0),
+                () -> assertEquals("Professor", userDtoCheck.getUserType().getName())
 
         );
     }
@@ -78,9 +77,9 @@ class UserIntegrationTest {
         UserDto userDtoCheck = userService.findById(userDto.getUserId());
 
         assertAll("Check User with User Type Aluno",
-                () -> assertNotNull(userDtoCheck.getUserTypeDto()),
-                () -> assertTrue(userDtoCheck.getUserTypeDto().getId() > 0),
-                () -> assertEquals("Aluno", userDtoCheck.getUserTypeDto().getName())
+                () -> assertNotNull(userDtoCheck.getUserType()),
+                () -> assertTrue(userDtoCheck.getUserType().getId() > 0),
+                () -> assertEquals("Aluno", userDtoCheck.getUserType().getName())
 
         );
     }

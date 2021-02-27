@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class FieldDto {
 
     private Integer id;
-    private boolean isCovert;
-    private int number;
+    private String name;
+    private boolean covered;
     private LocalDateTime createTime;
     private LocationDto locationDto;
 

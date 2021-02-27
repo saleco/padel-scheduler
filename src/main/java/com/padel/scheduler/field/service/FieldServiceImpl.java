@@ -1,39 +1,33 @@
 package com.padel.scheduler.field.service;
 
-import com.padel.scheduler.exceptions.NotFoundException;
+import com.padel.scheduler.base.dto.PageableRequestDto;
+import com.padel.scheduler.base.mappers.BaseMapper;
+import com.padel.scheduler.base.services.CrudServiceImpl;
 import com.padel.scheduler.field.dto.FieldDto;
-import com.padel.scheduler.field.mapper.FieldMapper;
-import com.padel.scheduler.field.repository.FieldRepository;
-import lombok.RequiredArgsConstructor;
+import com.padel.scheduler.field.model.Field;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 @Service
-@RequiredArgsConstructor
-public class FieldServiceImpl implements FieldService {
+public class FieldServiceImpl extends CrudServiceImpl<FieldDto, Field> {
 
-    private final FieldRepository fieldRepository;
-    private final FieldMapper fieldMapper;
-
-    @Override
-    public FieldDto save(FieldDto fieldDto) {
-        return fieldMapper.fieldToFieldDto(fieldRepository.save(fieldMapper.fieldDtoToField(fieldDto)));
+    public FieldServiceImpl(JpaRepository<Field, Integer> repository, BaseMapper<FieldDto, Field> mapper) {
+        super(repository, mapper);
     }
 
     @Override
-    public List<FieldDto> list() {
-        return StreamSupport.stream(fieldRepository.findAll().spliterator(), true)
-                .map(fieldMapper::fieldToFieldDto)
-                .collect(Collectors.toList());
+    public FieldDto save(FieldDto fieldDto) {
+        return super.save(fieldDto);
+    }
+
+    @Override
+    public Page<FieldDto> list(PageableRequestDto pageableRequestDto) {
+        return super.list(pageableRequestDto);
     }
 
     @Override
     public FieldDto findById(Integer id) {
-        return fieldRepository.findById(id)
-                .map(fieldMapper::fieldToFieldDto)
-                .orElseThrow(() -> new NotFoundException("User not found"));
+        return super.findById(id);
     }
 }

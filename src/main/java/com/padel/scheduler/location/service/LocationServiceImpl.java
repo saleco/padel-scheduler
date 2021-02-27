@@ -1,39 +1,34 @@
 package com.padel.scheduler.location.service;
 
-import com.padel.scheduler.exceptions.NotFoundException;
+import com.padel.scheduler.base.dto.PageableRequestDto;
+import com.padel.scheduler.base.mappers.BaseMapper;
+import com.padel.scheduler.base.services.CrudServiceImpl;
 import com.padel.scheduler.location.dto.LocationDto;
-import com.padel.scheduler.location.mapper.LocationMapperImpl;
-import com.padel.scheduler.location.repository.LocationRepository;
-import lombok.RequiredArgsConstructor;
+import com.padel.scheduler.location.model.Location;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 @Service
-@RequiredArgsConstructor
-public class LocationServiceImpl implements LocationService {
+public class LocationServiceImpl extends CrudServiceImpl<LocationDto, Location> {
 
-    private final LocationRepository locationRepository;
-    private final LocationMapperImpl locationMapper;
 
-    @Override
-    public LocationDto save(LocationDto locationDto) {
-        return locationMapper.locationToLocationDto(locationRepository.save(locationMapper.locationDtoToLocation(locationDto)));
+    public LocationServiceImpl(JpaRepository<Location, Integer> repository, BaseMapper<LocationDto, Location> mapper) {
+        super(repository, mapper);
     }
 
     @Override
-    public List<LocationDto> list() {
-        return StreamSupport.stream(locationRepository.findAll().spliterator(), true)
-                .map(locationMapper::locationToLocationDto)
-                .collect(Collectors.toList());
+    public LocationDto save(LocationDto locationDto) {
+        return super.save(locationDto);
+    }
+
+    @Override
+    public Page<LocationDto> list(PageableRequestDto pageableRequestDto) {
+        return super.list(pageableRequestDto);
     }
 
     @Override
     public LocationDto findById(Integer id) {
-        return locationRepository.findById(id)
-                .map(locationMapper::locationToLocationDto)
-                .orElseThrow(() -> new NotFoundException("Location not found"));
+        return super.findById(id);
     }
 }

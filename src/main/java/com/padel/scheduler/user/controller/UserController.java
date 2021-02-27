@@ -1,8 +1,8 @@
 package com.padel.scheduler.user.controller;
 
-import com.padel.scheduler.dto.PageableRequestDto;
+import com.padel.scheduler.base.dto.PageableRequestDto;
+import com.padel.scheduler.base.services.CrudService;
 import com.padel.scheduler.user.dto.UserDto;
-import com.padel.scheduler.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final CrudService<UserDto> userService;
 
     @Operation(summary = "Retrieves a Page of Users")
     @GetMapping

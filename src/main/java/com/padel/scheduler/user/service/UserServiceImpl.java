@@ -1,48 +1,34 @@
 package com.padel.scheduler.user.service;
 
-import com.padel.scheduler.dto.PageableRequestDto;
-import com.padel.scheduler.exceptions.NotFoundException;
+import com.padel.scheduler.base.dto.PageableRequestDto;
+import com.padel.scheduler.base.mappers.BaseMapper;
+import com.padel.scheduler.base.services.CrudServiceImpl;
 import com.padel.scheduler.user.dto.UserDto;
-import com.padel.scheduler.user.mapper.UserMapper;
-import com.padel.scheduler.user.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import com.padel.scheduler.user.model.User;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
-
-@RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends CrudServiceImpl<UserDto, User> {
 
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    public UserServiceImpl(JpaRepository<User, Integer> repository, BaseMapper<UserDto, User> mapper) {
+        super(repository, mapper);
+    }
 
     @Override
-    public UserDto save(UserDto userDTO) {
-        return userMapper.userToUserDto(userRepository.save(userMapper.userDtoToUser(userDTO)));
+    public UserDto save(UserDto userDto) {
+        return super.save(userDto);
 
     }
 
     @Override
     public Page<UserDto> list(PageableRequestDto pageableRequestDto) {
-        Pageable pageable = PageRequest.of(pageableRequestDto.getPage(), pageableRequestDto.getSize());
-
-        return new PageImpl(
-          userRepository.findAll(pageable).getContent().stream()
-            .map(userMapper::userToUserDto)
-            .collect(Collectors.toList())
-        );
-
+        return super.list(pageableRequestDto);
     }
 
     @Override
     public UserDto findById(Integer userId) {
-        return userRepository.findById(userId)
-                .map(userMapper::userToUserDto)
-                .orElseThrow(() -> new NotFoundException("User not found"));
+        return super.findById(userId);
     }
 }
