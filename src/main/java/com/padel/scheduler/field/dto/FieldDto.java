@@ -18,6 +18,6 @@ public class FieldDto {
     private String name;
     private boolean covered;
     private LocalDateTime createTime;
-    private LocationDto locationDto;
+    private LocationDto location;
 
 }

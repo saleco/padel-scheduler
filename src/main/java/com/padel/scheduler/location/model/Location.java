@@ -1,15 +1,15 @@
 package com.padel.scheduler.location.model;
 
-import com.padel.scheduler.field.model.Field;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -26,11 +26,17 @@ public class Location {
     private String longitude;
     private LocalDateTime createTime;
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Field> fields = new ArrayList<>();
-
-    public void addField(Field field){
-        this.fields.add(field);
-        field.setLocation(this);
-    }
+//    @ToString.Exclude
+//    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Field> fields = new ArrayList<>();
+//
+//    public void addField(Field field){
+//        this.fields.add(field);
+//        field.setLocation(this);
+//    }
+//
+//    public void removeField(Field field) {
+//        fields.remove(field);
+//        field.setLocation(null);
+//    }
 }

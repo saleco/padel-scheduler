@@ -1,10 +1,7 @@
 package com.padel.scheduler.field.model;
 
 import com.padel.scheduler.location.model.Location;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,10 +17,22 @@ public class Field {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private boolean isCovered;
-    private int number;
+    private String name;
     private LocalDateTime createTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Location location;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Field )) return false;
+        return id != null && id.equals(((Field) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }
