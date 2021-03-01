@@ -4,6 +4,7 @@ import com.padel.scheduler.base.services.CrudService;
 import com.padel.scheduler.factories.FieldFactory;
 import com.padel.scheduler.factories.LocationFactory;
 import com.padel.scheduler.field.dto.FieldDto;
+import com.padel.scheduler.field.service.FieldServiceImpl;
 import com.padel.scheduler.location.dto.LocationDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class FieldIntegrationTest {
 
     @Autowired
-    private CrudService<FieldDto> fieldService;
+    private FieldServiceImpl fieldService;
 
     @Autowired
     private CrudService<LocationDto> locationService;
@@ -43,6 +45,8 @@ class FieldIntegrationTest {
     void createField_ThenCheckFieldCreated() {
         FieldDto fieldDto = createFieldQuadra1InPadelNasPiramidades();
         FieldDto fieldDtoCheck = fieldService.findById(fieldDto.getId());
+
+        List<FieldDto> fieldsByLocation = fieldService.findFieldsByLocation(fieldDtoCheck.getLocation());
 
         assertAll(
           () -> assertNotNull(fieldDtoCheck),

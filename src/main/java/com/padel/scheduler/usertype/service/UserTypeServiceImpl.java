@@ -1,16 +1,16 @@
 package com.padel.scheduler.usertype.service;
 
-import com.padel.scheduler.base.mappers.BaseMapper;
 import com.padel.scheduler.base.services.CrudServiceImpl;
 import com.padel.scheduler.usertype.dto.UserTypeDto;
+import com.padel.scheduler.usertype.mapper.UserTypeMapper;
 import com.padel.scheduler.usertype.model.UserType;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.padel.scheduler.usertype.repository.UserTypeRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserTypeServiceImpl extends CrudServiceImpl<UserTypeDto, UserType> {
 
-    public UserTypeServiceImpl(JpaRepository<UserType, Integer> repository, BaseMapper<UserTypeDto, UserType> mapper) {
+    public UserTypeServiceImpl(UserTypeRepository repository, UserTypeMapper mapper) {
         super(repository, mapper);
     }
 

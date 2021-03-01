@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public abstract class CrudServiceImpl<T, M> implements CrudService<T> {
 
     private final JpaRepository<M, Integer> repository;
-    private final BaseMapper<T, M> mapper;
+    protected final BaseMapper<T, M> mapper;
 
     @Override
     public T save(T dto) {
